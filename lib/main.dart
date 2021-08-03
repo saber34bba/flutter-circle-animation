@@ -53,11 +53,20 @@ bool taped=false;
       child: Scaffold(
        
 
-body:Container(
+body:Stack(children: [
+
+  Container(
   alignment: Alignment.center,
 child: Text("hello"),
 
-)
+            
+  
+),
+CustomPaint(painter: AnimatedCustomPainter(
+            _animationController.view,MediaQuery.of(context).size.height,MediaQuery.of(context).size.width
+          ),),
+
+],)
       ),
     ),);
   }
@@ -86,10 +95,10 @@ class AnimatedCustomPainter extends CustomPainter {
   final Animation<double> _size;
   final Animation<double> _offset;
   final Animation<Color> _color;
-
-  AnimatedCustomPainter(Animation<double> animation)
+Size height;
+  AnimatedCustomPainter(Animation<double> animation,height,width)
       : _size = Tween<double>(begin: 80, end: 300).animate(animation),
-        _offset = Tween<double>(begin: 100, end: 0).animate(animation),
+        _offset = Tween<double>(begin: height, end: height-100).animate(animation),
         _color =
             ColorTween(begin: Colors.white, end: Colors.blue).animate(animation),
         super(repaint: animation);
